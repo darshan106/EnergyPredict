@@ -1,125 +1,64 @@
-EnergyPredict ⚡
-AI-Powered Energy Usage Forecasting for Efficiency and Sustainability
-EnergyPredict is a web application that leverages machine learning to predict energy consumption based on historical data. Built with Flask and powered by an LSTM model, this tool helps users optimize energy usage, achieve sustainability goals, and make data-driven decisions through interactive visualizations and detailed reports.
-Visualize your energy usage with interactive charts and actionable insights.
+# ⚡ EnergyPredict  
+**AI-Powered Energy Usage Forecasting for Efficiency and Sustainability**
 
-🚀 Features
+**EnergyPredict** is a web application that leverages machine learning to forecast energy consumption based on historical data. Built with Flask and powered by an LSTM model, this tool helps users optimize energy usage, achieve sustainability goals, and make data-driven decisions through interactive visualizations and downloadable reports.
 
-Accurate Predictions: Uses an LSTM model to forecast energy usage with high precision.
-Interactive Charts: Visualize actual vs. predicted energy usage with dynamic line graphs powered by Chart.js.
-Secure Data Handling: Processes CSV uploads securely in memory, ensuring data privacy.
-Detailed Reports: Download comprehensive reports with prediction results for further analysis.
-Modern UI: Clean, responsive design with a drag-and-drop file uploader and loading animations.
-Easy Deployment: Deployed on Render for seamless hosting without storage constraints.
+> Visualize your energy usage with interactive charts and actionable insights.
 
+---
 
-🛠️ Tech Stack
+## 🚀 Features
 
-Backend: Flask (Python)
-Machine Learning: TensorFlow (LSTM model)
-Frontend: HTML, CSS, JavaScript, Chart.js
-Styling: Custom CSS with a modern SaaS design (Inter font, gradient backgrounds)
-Deployment: Render (manual zip upload)
+- **Accurate Predictions:** Uses an LSTM model to forecast energy usage with high precision.
+- **Interactive Charts:** Visualize actual vs. predicted energy usage with dynamic line graphs (Chart.js).
+- **Secure Data Handling:** Processes CSV uploads securely in memory, ensuring privacy.
+- **Detailed Reports:** Download comprehensive prediction reports for further analysis.
+- **Modern UI:** Clean, responsive design with drag-and-drop uploader and animations.
+- **Easy Deployment:** Deployed on Render without storage constraints.
 
+---
 
-📈 How It Works
+## 🛠️ Tech Stack
 
-Upload Data: Drag and drop or select a CSV file with historical energy data (Datetime, COMED_MW).
-Predict: The app processes the data using a pre-trained LSTM model to generate predictions.
-Visualize: View actual vs. predicted energy usage on an interactive chart.
-Download: Export a detailed report with your results.
+- **Backend:** Flask (Python)  
+- **Machine Learning:** TensorFlow (LSTM model)  
+- **Frontend:** HTML, CSS, JavaScript, Chart.js  
+- **Styling:** Custom CSS (Inter font, gradient backgrounds)  
+- **Deployment:** Render (manual zip upload)  
 
+---
 
-📋 Prerequisites
-To run this project locally, ensure you have the following installed:
+## 📈 How It Works
 
-Python 3.9+
-pip (Python package manager)
-Virtualenv (recommended for dependency isolation)
+1. **Upload Data:** Drag and drop or select a CSV file with `Datetime` and `COMED_MW` columns.
+2. **Predict:** The LSTM model processes the data and generates future energy usage predictions.
+3. **Visualize:** View interactive charts comparing actual vs. predicted values.
+4. **Download:** Export a detailed report with the results.
 
+---
 
-⚙️ Installation
+## 📋 Prerequisites
 
-Clone the Repository:
+- Python 3.9+
+- pip (Python package manager)
+- Virtualenv (recommended)
+
+---
+
+## ⚙️ Installation
+
+```bash
+# Clone the Repository
 git clone https://github.com/yourusername/EnergyPredict.git
 cd EnergyPredict
 
-
-Set Up a Virtual Environment (optional but recommended):
+# Set Up Virtual Environment (Optional)
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-
-Install Dependencies:
+# Install Dependencies
 pip install -r requirements.txt
 
-
-Run the Application:
+# Run the Application
 python app.py
-
-Open your browser and navigate to http://127.0.0.1:5000.
-
-
-
-📂 Project Structure
-EnergyPredict/
-├── app.py                  # Main Flask application
-├── model.py                # LSTM model loading and prediction logic
-├── utils/
-│   ├── preprocess.py       # Data preprocessing functions
-│   └── report_generator.py # Report generation logic
-├── static/
-│   └── styles.css          # Custom CSS for styling
-├── templates/
-│   └── index.html          # Main HTML template
-├── model/
-│   └── lstm_model.h5       # Pre-trained LSTM model
-├── requirements.txt        # Python dependencies
-└── Procfile                # Render deployment configuration
-
-
-🌐 Deployment
-This project is deployed on Render using a manual zip upload method, making it easy to host without GitHub.
-Deploy on Render
-
-Zip your project folder:zip -r EnergyPredict.zip EnergyPredict
-
-
-Go to render.com and create a new Web Service.
-Choose “Upload a zip file” and upload EnergyPredict.zip.
-Configure:
-Runtime: Python
-Build Command: pip install -r requirements.txt
-Start Command: gunicorn app:app
-Instance Type: Free tier
-
-
-Deploy and access your app at the provided URL (e.g., https://energypredict.onrender.com).
-
-
-📊 Example Usage
-
-Visit the deployed app (e.g., https://energypredict.onrender.com).
-Scroll to the "Predict Your Energy Usage" section.
-Upload a CSV file with Datetime and COMED_MW columns.
-View the interactive chart comparing actual and predicted usage.
-Download the generated report for detailed insights.
-
-
-🤝 Contributing
-Contributions are welcome! If you’d like to contribute:
-
-Fork the repository.
-Create a new branch (git checkout -b feature/your-feature).
-Commit your changes (git commit -m "Add your feature").
-Push to the branch (git push origin feature/your-feature).
-Open a Pull Request.
-
-
-📜 License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-📬 Contact
-For questions or feedback, reach out to me at your.email@example.com or open an issue on GitHub.
-
-Built with ❤️ by Your Name
+Navigate to http://127.0.0.1:5000 in your browser.
