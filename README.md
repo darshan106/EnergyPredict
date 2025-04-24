@@ -85,3 +85,31 @@ EnergyPredict/
 ```
 
 ---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+To contribute:
+
+```bash
+# Fork and Clone
+git clone https://github.com/yourusername/EnergyPredict.git
+
+# Create a new branch
+git checkout -b feature/your-feature
+
+# Make your changes and commit
+git commit -m "Add your feature"
+
+# Push changes
+git push origin feature/your-feature
+
+# Open a Pull Request
+```
+
+---
+
+## 📜 License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
