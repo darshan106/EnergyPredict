@@ -63,7 +63,7 @@ pip install -r requirements.txt
 python app.py
 Navigate to http://127.0.0.1:5000 in your browser.
 
----
+```
 
 ## 📂 Project Structure
 
@@ -82,5 +82,6 @@ EnergyPredict/
 │   └── lstm_model.h5       # Pre-trained model
 ├── requirements.txt        # Dependencies
 └── Procfile                # Render config
+```
 
 ---
