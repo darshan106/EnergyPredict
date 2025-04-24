@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EnergyPredict - AI-Powered Energy Forecasting</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FontAwesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">EnergyPredict</div>
+            <div>
+                <a href="#features-1">Features</a>
+                <a href="#testimonials">Testimonials</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#cta-section">Get Started</a>
+                <a href="#" class="cta">Get for free</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Pathway to Energy Efficiency</h1>
+            <p>Harness the power of AI to predict energy usage, optimize operations, and achieve sustainability goals.</p>
+            <div class="buttons">
+                <a href="#prediction-section" class="cta">Get started</a>
+                <a href="#features-1" class="learn-more">Learn more →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prediction Section -->
+    <section id="prediction-section" class="prediction-section">
+        <h2>Predict Your Energy Usage</h2>
+        <p>Upload your historical energy data in CSV format (Datetime, COMED_MW) to get accurate predictions.</p>
+        <div class="upload-form-container">
+            <div class="upload-form">
+                <div class="drop-area" id="dropArea">
+                    <p>Drag and drop your CSV file here or</p>
+                    <label for="file" class="choose-file-btn">Choose File</label>
+                    <input type="file" name="file" id="file" accept=".csv" required>
+                    <p id="fileName" class="file-name">No file selected</p>
+                </div>
+                <form method="POST" action="/predict" enctype="multipart/form-data" id="uploadForm">
+                    <input type="file" name="file" id="hiddenFileInput" accept=".csv" style="display: none;">
+                    <button type="submit" id="predictButton">Predict Now</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Loading Animation -->
+        <div class="loading-container" id="loadingContainer">
+            <div class="loading-spinner"></div>
+            <p>Processing your data...</p>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-container" id="chartContainer">
+            {% if dates %}
+            <canvas id="energyChart"></canvas>
+            <script>
+                const ctx = document.getElementById('energyChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: {{ dates | tojson }},
+                        datasets: [
+                            {
+                                label: 'Actual Usage (MW)',
+                                data: {{ actuals | tojson }},
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Predicted Usage (MW)',
+                                data: {{ predictions | tojson }},
+                                borderColor: '#f43f5e',
+                                backgroundColor: 'rgba(244, 63, 94, 0.1)',
+                                fill: true,
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { position: 'top', labels: { color: '#1e293b' } },
+                            tooltip: { mode: 'index', intersect: false }
+                        },
+                        scales: {
+                            x: { 
+                                title: { display: true, text: 'Timestamp', font: { size: 14 }, color: '#1e293b' },
+                                ticks: { maxRotation: 45, minRotation: 45, color: '#1e293b' }
+                            },
+                            y: { 
+                                title: { display: true, text: 'Energy Usage (MW)', font: { size: 14 }, color: '#1e293b' },
+                                beginAtZero: false,
+                                ticks: { color: '#1e293b' }
+                            }
+                        }
+                    }
+                });
+
+                // Show chart container if data is present
+                document.getElementById('chartContainer').style.display = 'block';
+            </script>
+            {% endif %}
+        </div>
+
+        <!-- Download Button -->
+        {% if download_link %}
+        <div class="download-section">
+            <div class="download-link">
+                <a href="/download/{{ download_link }}" download><i class="fas fa-download mr-2"></i>Download Report</a>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+
+    <!-- Features Section 1 -->
+    <section id="features-1" class="features-1">
+        <div class="container">
+            <h2>A more effective way to predict energy usage</h2>
+            <p>Effortlessly forecast energy consumption with AI-powered tools, designed for accuracy and efficiency.</p>
+            <div class="feature-grid-1">
+                <div class="feature-item-1">
+                    <h3>Accurate Predictions</h3>
+                    <p>Utilize advanced LSTM models to predict energy usage with high precision.</p>
+                </div>
+                <div class="feature-item-1">
+                    <h3>Interactive Charts</h3>
+                    <p>Visualize actual vs. predicted usage with dynamic, easy-to-read graphs.</p>
+                </div>
+                <div class="feature-item-1">
+                    <h3>Secure Data</h3>
+                    <p>Your data is protected with top-tier encryption.</p>
+                </div>
+                <div class="feature-item-1">
+                    <h3>Detailed Reports</h3>
+                    <p>Download comprehensive reports to analyze your predictions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section 2 -->
+    <section id="features-2" class="features-2">
+        <div class="container">
+            <h2>Streamlined for easy management</h2>
+            <p>Enjoy seamless data uploads, accurate predictions, and actionable insights, all in one place.</p>
+            <div class="feature-grid-2">
+                <div class="feature-item-2">
+                    <h3>Seamless Uploads</h3>
+                    <p>Easily upload your data and get results in seconds.</p>
+                </div>
+                <div class="feature-item-2">
+                    <h3>Actionable Insights</h3>
+                    <p>Break down predictions into actionable steps to optimize energy usage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2>Pricing</h2>
+            <p>Free forever. Upgrade for advanced features, better security, and priority support.</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Free</h3>
+                    <div class="price">₹0/month</div>
+                    <ul>
+                        <li>Up to 5 predictions</li>
+                        <li>Unlimited uploads</li>
+                        <li>2GB storage</li>
+                        <li>Basic support</li>
+                    </ul>
+                    <button>Get started for free</button>
+                </div>
+                <div class="pricing-card popular">
+                    <h3>Pro</h3>
+                    <div class="price">₹750/month</div>
+                    <ul>
+                        <li>Up to 50 predictions</li>
+                        <li>Unlimited uploads</li>
+                        <li>50GB storage</li>
+                        <li>Integrations</li>
+                        <li>Priority support</li>
+                        <li>Export capabilities</li>
+                    </ul>
+                    <button>Sign up now</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>Business</h3>
+                    <div class="price">₹1600/month</div>
+                    <ul>
+                        <li>Unlimited predictions</li>
+                        <li>Unlimited uploads</li>
+                        <li>200GB storage</li>
+                        <li>Integrations</li>
+                        <li>Dedicated account manager</li>
+                        <li>Custom fields</li>
+                        <li>Advanced analytics</li>
+                        <li>Export capabilities</li>
+                        <li>API access</li>
+                        <li>Advanced security features</li>
+                    </ul>
+                    <button>Sign up now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2>What our users say</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-item">
+                    <p>"EnergyPredict has transformed how we manage our energy consumption. The predictions are spot on!"</p>
+                    <h3>Jane Doe, Energy Manager</h3>
+                </div>
+                <div class="testimonial-item">
+                    <p>"Planning and executing energy strategies has never been easier. This tool helps us stay on track."</p>
+                    <h3>Rahul Sharma, Operations Lead</h3>
+                </div>
+                <div class="testimonial-item">
+                    <p>"The user-friendly interface and actionable insights have met our diverse energy management needs."</p>
+                    <h3>Priya Kapoor, Data Analyst</h3>
+                </div>
+                <div class="testimonial-item">
+                    <p>"This tool has completely transformed how I manage energy forecasts and sustainability goals."</p>
+                    <h3>Amit Patel, Sustainability Officer</h3>
+                </div>
+                <div class="testimonial-item">
+                    <p>"The accuracy and integration capabilities of this tool are top-notch."</p>
+                    <h3>Neha Gupta, Energy Consultant</h3>
+                </div>
+                <div class="testimonial-item">
+                    <p>"I was amazed at how quickly we were able to integrate this tool into our workflow."</p>
+                    <h3>Vikram Singh, Operations Manager</h3>
+                </div>
+                <div class="testimonial-item">
+                    <p>"With this tool, we can easily predict usage, track trends, and optimize in one place."</p>
+                    <h3>Arjun Mehta, Energy Analyst</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta-section" class="cta-section">
+        <div class="container">
+            <h2>Sign up for free today</h2>
+            <p>Harness the power of AI to predict energy usage, optimize operations, and achieve sustainability goals.</p>
+            <div class="buttons">
+                <a href="#prediction-section" class="cta">Get started</a>
+                <a href="#features-1" class="learn-more">Learn more →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div>
+                <h3>Product</h3>
+                <ul>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Integrations</a></li>
+                    <li><a href="#">Updates</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Pricing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Company</h3>
+                <ul>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Examples</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Guides</a></li>
+                    <li><a href="#">Docs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy</a></li>
+                    <li><a href="#">Terms</a></li>
+                    <li><a href="#">Security</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for Drag-and-Drop and Loading Animation -->
+    <script>
+        const dropArea = document.getElementById('dropArea');
+        const fileInput = document.getElementById('file');
+        const hiddenFileInput = document.getElementById('hiddenFileInput');
+        const fileNameDisplay = document.getElementById('fileName');
+        const predictButton = document.getElementById('predictButton');
+        const loadingContainer = document.getElementById('loadingContainer');
+        const chartContainer = document.getElementById('chartContainer');
+        const uploadForm = document.getElementById('uploadForm');
+
+        // Drag-and-Drop Events
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('dragover');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('dragover');
+        });
+
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].name.endsWith('.csv')) {
+                fileInput.files = files;
+                hiddenFileInput.files = files;
+                fileNameDisplay.textContent = files[0].name;
+                predictButton.disabled = false;
+            } else {
+                fileNameDisplay.textContent = 'Please upload a CSV file';
+                predictButton.disabled = true;
+            }
+        });
+
+        // File Input Change Event
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                hiddenFileInput.files = fileInput.files;
+                fileNameDisplay.textContent = fileInput.files[0].name;
+                predictButton.disabled = false;
+            } else {
+                fileNameDisplay.textContent = 'No file selected';
+                predictButton.disabled = true;
+            }
+        });
+
+        // Form Submission with Loading Animation
+        uploadForm.addEventListener('submit', (e) => {
+            if (hiddenFileInput.files.length === 0) {
+                e.preventDefault();
+                fileNameDisplay.textContent = 'Please select a file';
+                return;
+            }
+            predictButton.disabled = true;
+            loadingContainer.style.display = 'block';
+            chartContainer.style.display = 'none';
+        });
+
+        // Show chart container if data is present (after page load)
+        if (document.getElementById('energyChart')) {
+            loadingContainer.style.display = 'none';
+            chartContainer.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
