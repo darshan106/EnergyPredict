@@ -62,3 +62,25 @@ pip install -r requirements.txt
 # Run the Application
 python app.py
 Navigate to http://127.0.0.1:5000 in your browser.
+
+---
+
+## 📂 Project Structure
+
+```bash
+EnergyPredict/
+├── app.py                  # Main Flask app
+├── model.py                # LSTM prediction logic
+├── utils/
+│   ├── preprocess.py       # Data preprocessing
+│   └── report_generator.py # Report generation
+├── static/
+│   └── styles.css          # Custom styles
+├── templates/
+│   └── index.html          # Frontend HTML
+├── model/
+│   └── lstm_model.h5       # Pre-trained model
+├── requirements.txt        # Dependencies
+└── Procfile                # Render config
+
+---
